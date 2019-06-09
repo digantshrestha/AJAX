@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX with JSON</title>
+</head>
+<body>
+    <button id="btn">Get User</button>
+    <div id="list"></div>
+
+    <script>
+        document.getElementById("btn").addEventListener("click",getList);
+
+        function getList(){
+            var xhr=new XMLHttpRequest();
+            xhr.open("GET","user.json",true);
+            xhr.onload=function(){
+                if(this.status==200){
+                    var content=JSON.parse(this.responseText);
+                    var output="";
+                    output+=`<ul>
+                        <li>Id : ${content.id}</li>
+                        <li>Name : ${content.name}</li>
+                        <li>Email : ${content.email}</li>
+                        </ul>`;
+                    document.getElementById("list").innerHTML=output;
+                    var li=document.querySelector("#list");
+                    for(i of li.children){
+                        i.style.listStyle="none";
+                        i.style.paddingLeft="5px";
+                    }
+                }
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
